@@ -1,0 +1,11 @@
+# ignore git changes
+./.git/*
+
+# package control
+./node_modules/*
+
+# logs
+./npm_debug.log
+
+# ignore client stuff
+./public/*
