@@ -72,6 +72,48 @@ function style(feature) {
     };
 }
 
+function highlightFeature(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+}
+
+var geojson, map;
+
+function resetHighlight(e) {
+	geojson.resetStyle(e.target);
+}
+
+function zoomToFeature(e) {
+    map.fitBounds(e.target.getBounds());
+}
+
+function onEachFeature(feature, layer) {
+	layer.on({
+		mouseover: highlightFeature,
+		mouseout: resetHighlight,
+		click: zoomToFeature
+	});
+
+	var center = layer.getBounds().getCenter();
+    var label = L.marker(center, {
+      icon: L.divIcon({
+        iconSize: null,
+        className: 'label',
+        html: '<div>' + feature.properties.Name + '</div>'
+      })
+    }).addTo(map);
+}
+
 
 /*
  * bubble chart
@@ -143,22 +185,25 @@ $(document).ready(() => {
 
 	$.getJSON('/neighborhoods.json', (data) => {
 
-		var map = L.map('leaflet-map', {
+		map = L.map('leaflet-map', {
+			scrollWheelZoom: false,
 			zoomControl: false,
 			maxZoom: 18,
-		}).setView([42.327, -71.027], 9);
+		}).setView([42.317, -71.09], 11.5);
 		
 		L.tileLayer('https://api.mapbox.com/styles/v1/syps/ciwf776k3003t2plk320qq8if/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3lwcyIsImEiOiJjaXdmNzIxeW8wODJ5Mm9vYnR4czY3bzYxIn0.UaUvDxbvMdYqrSuuTBjJ4g', {
 			id: 'mapbox.light',
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
 		}).addTo(map);
 
-		L.geoJson(data).addTo(map);
+		geojson = L.geoJson(data, {
+			style: style,
+			onEachFeature: onEachFeature
+		}).addTo(map);
 
 	});
 
 	
-
 
 });
 

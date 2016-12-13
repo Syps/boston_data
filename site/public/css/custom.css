@@ -1,7 +1,18 @@
 #leaflet-map {
 	height: 80vh;
+	width: 60%;
 }
 
 #chart-canvas {
 	height: 80vh;
+
 }
+
+.container {
+	border: 1px solid black;
+}
+
+.chart-container * {
+	float: left;
+}
+

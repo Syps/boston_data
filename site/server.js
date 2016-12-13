@@ -12,9 +12,9 @@ app.get('/neighborhoods.json', (req,res) => {
 	res.send(neighborhoods);
 });
 
-app.get('/', (req,res) => {
+app.get('/boston-data', (req,res) => {
 	res.render('index.html');
 });
 
-app.listen(8080);
+app.listen(8080); 
 console.log('boo-yah 8080!');
