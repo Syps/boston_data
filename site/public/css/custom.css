@@ -3,9 +3,8 @@
 	width: 60%;
 }
 
-#scatter-canvas1 {
-	margin-bottom: 400px;
-
+#scatter-canvas1, #bar-canvas1 {
+	margin-bottom: 200px;
 }
 
 .container {
@@ -39,7 +38,17 @@
   pointer-events: none;
 }
 
-svg {
-	z-index: -1;
+
+/* bar chart */
+
+.bar {
+  fill: steelblue;
 }
 
+.bar:hover {
+  fill: brown;
+}
+
+.axis--x path {
+  display: none;
+}

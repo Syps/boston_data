@@ -70,7 +70,7 @@ function onEachFeature(feature, layer) {
  */
 
  var scatterDomain = 'povertyPct',
- 	scatterRange = 'violentCrimePerCapita',
+ 	scatterRange = 'violentCrimesPerThousandPpl',
  	cLabel = 'Neighborhood',
  	scatterDiv = '#scatter-canvas1';
 
@@ -106,17 +106,53 @@ function onEachFeature(feature, layer) {
  	return `(${xValue(d)}, ${yValue(d)})`;
  };
 
+ /*
+  * bar chart
+  */
+
+  var barDomain = 'Neighborhood',
+  	barRange = 'shootings';
+
+  var barSVG = d3.select("#bar-canvas1").append("svg")
+  	.attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom + 120)
+  	.append("g")
+    .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+  var barX = d3.scale.ordinal().rangeRoundBands([0, width], 0.5),
+  	barY = d3.scale.linear().range([height, 0]);
+
+  var barXAxis = d3.svg.axis()
+  	.scale(barX)
+  	.orient("bottom")
+  	.ticks(0); // what are the available formats?
+
+  var barYAxis = d3.svg.axis()
+  	.scale(barY)
+  	.orient("left")
+  	.ticks(12);
+
+
+
+
+
 
  d3.csv('/csv/averages_2015.csv', (er, data) => {
 	
 	data.forEach((d) => {
 		d[scatterDomain] = +d[scatterDomain];
 		d[scatterRange] = +d[scatterRange];
+
+		d[barDomain] = d[barDomain];
+		d[barRange] = +d[barRange];
+
+		console.log(d[barDomain]);
+		console.log(d[barRange]);
 	});
 	
 	// prevent overlap with axis
 	xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
-	yScale.domain([d3.min(data, yValue)-.01, d3.max(data, yValue)+0.05]);
+	yScale.domain([d3.min(data, yValue)-1, d3.max(data, yValue)+1]);
 
 	scatterSVG.append("g")
 	.attr("class", "x axis")
@@ -163,24 +199,39 @@ function onEachFeature(feature, layer) {
       		.style("opacity", 0);
       });
 
-      // var legend  = scatterSVG.selectAll(".legend")
-      // 	.data(color.domain())
-      // 	.enter().append("g")
-      // 		.attr("class", "legend")
-      // 		.attr("transform", (d,i) => `translate(0, ${i*20})`);
+      data = data.filter((d) => d[barRange] > 0);
+      // bar chart
+      barX.domain(data.map((d) => d[barDomain]));
+      barY.domain([0, d3.max(data, (d) => d[barRange])]);
 
-      // legend.append("rect")
-      // 	.attr("x", width -18)
-      // 	.attr("width", 18)
-      // 	.attr("height", 18)
-      // 	.style("fill", color);
+      barSVG.append("g")
+      .attr("class", "x axis")
+      .attr("transform", `translate(0, ${height})`)
+      .call(barXAxis)
+    	.selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", "-.5em")
+      .attr("transform", "rotate(-55)");
 
-      // legend.append("text")
-      // 	.attr("x", width - 24)
-      // 	.attr("y", 9)
-      // 	.attr("dy", ".35em")
-      // 	.style("text-anchor", "end")
-      // 	.text((d) => d);
+      barSVG.append("g")
+      .attr("class", "y axis")
+      .call(barYAxis)
+    	.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Shootings in 2015");
+
+      barSVG.selectAll("bar")
+      	.data(data)
+      	.enter().append("rect")
+      	.attr("class", "bar")
+      	.attr("x", (d) => barX(d[barDomain]))
+      	.attr("width", barX.rangeBand())
+      	.attr("y", (d) => barY(d[barRange]))
+      	.attr("height", (d, i) => height - barY(d[barRange]));
 
 });
 
