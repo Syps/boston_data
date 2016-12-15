@@ -3,8 +3,8 @@
 	width: 60%;
 }
 
-#chart-canvas {
-	height: 80vh;
+#scatter-canvas1 {
+	margin-bottom: 400px;
 
 }
 
@@ -14,5 +14,32 @@
 
 .chart-container * {
 	float: left;
+}
+
+#map-facts {
+
+}
+
+/* scatter plot */
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+
+.tooltip {
+  position: absolute;  
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+}
+
+svg {
+	z-index: -1;
 }
 

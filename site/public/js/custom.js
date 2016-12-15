@@ -1,54 +1,4 @@
-// var x = d3.scaleTime()
-//     .domain([
-//       new Date(Date.parse('2014-01-01')),
-//       new Date(Date.parse('2014-04-01'))
-//     ])
-//     .range([0, 300]);
 
-// var xAxis = d3.axisBottom(x).ticks(4);
-
-// var svg = d3.select('.container')
-// 	.append('svg')
-// 	.attr('width', 300)
-// 	.attr('height', 150);
-
-// // svg.append('g')
-// // 	.attr('class', 'x axis')
-// // 	.call(xAxis);
-
-
-// var sales = [
-//   { product: 'Hoodie',  count: 7 },
-//   { product: 'Jacket',  count: 6 },
-//   { product: 'Snuggie', count: 9 },
-// ];
-
-// var rects = svg.selectAll('rect')
-// 	.data(sales);
-
-// console.log("rects.size() ---> " + rects.size());
-
-// var newRects = rects.enter();
-
-// console.log('typeof(newRects)  ---> ' + typeof(newRects));
-
-// // scales are functions that map from data space to screen space
-// var maxCount = d3.max(sales, (d,i) => d.count);
-// var x = d3.scaleLinear()
-// 	.range([0,300])
-// 	.domain([0, maxCount]);
-
-// var y = d3.scaleBand()
-// 	.rangeRound([0,75])
-// 	.domain(sales.map((d,i)=>d.product));
-
-// newRects.append('rect')
-// 	.attr('x', x(0))
-// 	.attr('y', (d,i)=>y(d.product))
-// 	.attr('height', y.bandwidth)
-// 	.attr('width', (d,i)=>x(d.count));
-
-// console.log('y bandwidth ==> ' + y.bandwidth);
 
 function getColor(d) {
     return d > 1000 ? '#800026' :
@@ -115,69 +65,124 @@ function onEachFeature(feature, layer) {
 }
 
 
-/*
- * bubble chart
+ /*
+ * scatter plot
  */
 
- // it'd be nice to have a toggle menu here where
- // I can change what column to use from csv
- // and there would be transition when I change it
+ var scatterDomain = 'povertyPct',
+ 	scatterRange = 'violentCrimePerCapita',
+ 	cLabel = 'Neighborhood',
+ 	scatterDiv = '#scatter-canvas1';
 
- // x-axis = 
- // y-axis = 
+ var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
- var diameter = 500,
- 	 color    = d3.scale.category20b(); 
+ var xValue = ((d) => d[scatterDomain]),
+ 	xScale = d3.scale.linear().range([0, width]),
+ 	xMap = ((d) => xScale(xValue(d))),
+ 	xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 
- var bubble = d3.layout.pack()
- 		.sort(null)
- 		.size([diameter, diameter])
- 		.padding(1.5);
 
- var svg = d3.select("#chart-canvas")
- 	.append("svg")
- 	.attr("width", diameter)
- 	.attr("height", diameter)
- 	.attr("class", "bubble");
+ var yValue = ((d) => d[scatterRange]),
+ 	yScale = d3.scale.linear().range([height, 0]),
+ 	yMap = ((d) => yScale(yValue(d))),
+ 	yAxis = d3.svg.axis().scale(yScale).orient("left");
 
- var column = "povertyPct";
+ var cValue = ((d) => d[cLabel]),
+ 	color = d3.scale.category10();
 
- d3.csv('/csv/averages_2015.csv', (data) => {
+ var scatterSVG = d3.select(scatterDiv).append("svg")
+ 		.attr("width", width + margin.left + margin.right)
+ 		.attr("height", height + margin.top + margin.bottom)
+ 		.append("g")
+ 		.attr("transform", `translate(${margin.left}, ${margin.right})`);
+
+ var tooltip = d3.select(scatterDiv).append("div")
+ 	.attr("class", "tooltip")
+ 	.style("opacity", 1);
+
+ var formattedValues = (d) => {
+ 	return `(${xValue(d)}, ${yValue(d)})`;
+ };
+
+
+ d3.csv('/csv/averages_2015.csv', (er, data) => {
 	
-	data = data.map((d) => {
-		d.value = d[column];
-		return d;
+	data.forEach((d) => {
+		d[scatterDomain] = +d[scatterDomain];
+		d[scatterRange] = +d[scatterRange];
 	});
+	
+	// prevent overlap with axis
+	xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
+	yScale.domain([d3.min(data, yValue)-.01, d3.max(data, yValue)+0.05]);
 
-	var nodes = bubble
-		.nodes({children:data})
-		.filter((d) => !d.children);
+	scatterSVG.append("g")
+	.attr("class", "x axis")
+	.attr("transform", `translate(0, ${height})`)
+	.call(xAxis)
+	.append("text")
+	.attr("class", "label")
+	.attr("x", width)
+	.attr("y", -6)
+	.style("text-anchor", "end")
+	.text("Pct Families in Poverty"); // abstract
 
-	var bubbles = svg.append("g")
-		.attr("transform", "translate(0,0)")
-		.selectAll(".bubble")
-		.data(nodes)
-		.enter();
+	  scatterSVG.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Violent Crime Per Capita");
 
-	bubbles.append("circle")
-		.attr("r", (d) => d.r)
-		.attr("cx", (d) => d.x)
-		.attr("cy", (d) => d.y)
-		.style("fill", (d) => color(d.value));
+      scatterSVG.selectAll(".dot")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("class", "dot")
+      .attr("r", 3.5)
+      .attr("cx", xMap)
+      .attr("cy", yMap)
+      .style("fill", (d) => color(cValue(d)))
+      .on("mouseover", (d) => {
+      	tooltip.transition()
+      		.duration(200)
+      		.style("opacity", .9);
+      	tooltip.html(`${d[cLabel]}<br/>${formattedValues(d)}`)
+      		.style("left", (d3.event.pageX + 5) + "px")
+              .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", (d) => {
+      	tooltip.transition()
+      		.duration(500)
+      		.style("opacity", 0);
+      });
 
-	bubbles.append("text")
-		.attr("x", (d) => d.x)
-		.attr("y", (d) => d.y + 5)
-		.attr("text-anchor", "middle")
-		.text((d) => d["Neighborhood"])
-		.style({
-			"fill":"white",
-			"font-family":"Helvetica Neue, Helvetica, Arial, san-serif",
-			"font-size": "12px"
-		});
+      // var legend  = scatterSVG.selectAll(".legend")
+      // 	.data(color.domain())
+      // 	.enter().append("g")
+      // 		.attr("class", "legend")
+      // 		.attr("transform", (d,i) => `translate(0, ${i*20})`);
+
+      // legend.append("rect")
+      // 	.attr("x", width -18)
+      // 	.attr("width", 18)
+      // 	.attr("height", 18)
+      // 	.style("fill", color);
+
+      // legend.append("text")
+      // 	.attr("x", width - 24)
+      // 	.attr("y", 9)
+      // 	.attr("dy", ".35em")
+      // 	.style("text-anchor", "end")
+      // 	.text((d) => d);
+
 });
-
-
 
 	/**/
 
