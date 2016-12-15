@@ -1,4 +1,4 @@
-
+var currentSelect = 'unemploymentPct';
 
 function getColor(d) {
     return d > 1000 ? '#800026' :
@@ -13,7 +13,7 @@ function getColor(d) {
 
 function style(feature) {
     return {
-        fillColor: getColor(feature.properties.density),
+        fillColor: getColor(feature.properties[currentSelect] || 0),
         weight: 2,
         opacity: 1,
         color: 'white',
@@ -27,7 +27,7 @@ function highlightFeature(e) {
 
     layer.setStyle({
         weight: 5,
-        color: '#666',
+        color: '#fff',
         dashArray: '',
         fillOpacity: 0.7
     });
@@ -35,12 +35,15 @@ function highlightFeature(e) {
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
     }
+
+    info.update(layer.feature.properties);
 }
 
-var geojson, map;
+var geojson, map, info;
 
 function resetHighlight(e) {
 	geojson.resetStyle(e.target);
+	info.update();
 }
 
 function zoomToFeature(e) {
@@ -48,6 +51,7 @@ function zoomToFeature(e) {
 }
 
 function onEachFeature(feature, layer) {
+	layer.bindPopup(feature.properties.value)
 	layer.on({
 		mouseover: highlightFeature,
 		mouseout: resetHighlight,
@@ -63,6 +67,23 @@ function onEachFeature(feature, layer) {
       })
     }).addTo(map);
 }
+
+var getNeighborhoodInfoElement = (props) => {
+	var header = '<h4>Neighborhood Stats</h4>';
+	return props ?
+		props.pop ?
+		`${header} 												\
+		<b>${props.Name}</b>									\
+		</br />													\
+		<p>Families in Poverty: ${props.povertyPct}%</p>			\
+        <p>Unemployment: ${props.unemploymentPct}%</p>				\
+        <p>Violent Crimes / 1000 People: ${props.vCrime1000}</p> \
+        <p>Shootings: ${props.shootings}</p>					\
+		`
+		: `${header} 											\
+		  <b>${props.Name}</b>`									
+		: 'Hover over a neighborhood';
+};
 
 
  /*
@@ -145,9 +166,6 @@ function onEachFeature(feature, layer) {
 
 		d[barDomain] = d[barDomain];
 		d[barRange] = +d[barRange];
-
-		console.log(d[barDomain]);
-		console.log(d[barRange]);
 	});
 	
 	// prevent overlap with axis
@@ -245,19 +263,46 @@ $(document).ready(() => {
 			scrollWheelZoom: false,
 			zoomControl: false,
 			maxZoom: 18,
-		}).setView([42.317, -71.09], 11.5);
+		}).setView([42.317, -70.87], 11.5); //11.5
+
+		map.doubleClickZoom.disable();
 		
 		L.tileLayer('https://api.mapbox.com/styles/v1/syps/ciwf776k3003t2plk320qq8if/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3lwcyIsImEiOiJjaXdmNzIxeW8wODJ5Mm9vYnR4czY3bzYxIn0.UaUvDxbvMdYqrSuuTBjJ4g', {
 			id: 'mapbox.light',
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
 		}).addTo(map);
 
-		geojson = L.geoJson(data, {
-			style: style,
+		geojson = L.choropleth(data, {
+			valueProperty:currentSelect,
+			scale: ['white', 'red'],
+			steps: 5,
+			mode: 'q',
+			style: {
+				color: '#fff',
+				weight: 2,
+				fillOpacity: 0.8
+			},
+			// style: style,
 			onEachFeature: onEachFeature
 		}).addTo(map);
 
-	});
+
+		info = L.control();
+
+		info.onAdd = function (map) {
+		    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+		    this.update();
+		    return this._div;
+		};
+
+		// method that we will use to update the control based on feature properties passed
+		info.update = function(props) {
+		    this._div.innerHTML = getNeighborhoodInfoElement(props);
+		};
+
+		info.addTo(map);
+
+	}).error((e) => console.log(e));
 
 	
 

@@ -48,23 +48,39 @@
     <div id="scatter-canvas1"></div>
     <div id="bar-canvas1"></div>
 
+
+  </div>
+
+  <div id="map-wrap">
+    <div class="custom-selector">
+      <select id="choropleth-select">
+        <option>Families in Poverty (%)</option>
+        <option>Unemployment (%)</option>
+        <option>Violent Crimes Per Thousand People</option>
+        <option>Shootings</option>
+      </select>
+    </div>
     <div class="chart-container">
       <div id="leaflet-map"></div>
-      <div id="map-facts">
+<!--       <div id="map-facts">
         <h3>Roxbury</h3>
-
-      </div>
+        <p>Families in Poverty: 30%</p>
+        <p>Unemployment: 9%</p>
+        <p>Violent Crimes / 1000 People: 34</p>
+        <p>Shootings: 9%</p>
+      </div> -->
     </div>
   </div>
 
 
-
+  <div class="container custom-footer">
   </div>
   <script src="/js/jquery.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
   <script src="/js/clean-blog.min.js"></script>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+  <script src="/js/choropleth.js"></script>
   <script src="/js/custom.js"></script>
-
+</body>
 </html>
