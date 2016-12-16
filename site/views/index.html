@@ -7,19 +7,15 @@
   <meta name="description" content="">
   <meta name="author" content="Nick Sypteras">
   <title>Boston Data</title>
-  <!-- Bootstrap Core CSS -->
-  <!-- Latest compiled and minified CSS -->
 
-  <!-- Custom CSS -->
   <link href="/css/clean-blog.min.css" rel="stylesheet">
   <link href="/css/cosmic-custom.css" rel="stylesheet">
   <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/custom.css" rel="stylesheet">
-  <!-- Custom Fonts -->
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+     <link href="/css/custom.css" rel="stylesheet">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -28,6 +24,7 @@
   <![endif]-->
 </head>
 <body>
+
  <nav class="navbar navbar-default navbar-custom navbar-fixed-top is-fixed is-visible">
     <div class="navbar-header page-scroll">
       <a class="navbar-brand">By The Data: Inequity in Boston</a>
@@ -41,13 +38,51 @@
       </ul>
     </div>
  </nav>
+
  <header class="intro-header boston">
+  <div class="container">
+   <div class="row">
+    <div class="custom-post-heading">
+      <h1 class="heading-txt">Poverty and Crime in Boston</h1>
+      <h3 class="subheading">January 1 - August 10, 2015</h3>
+    </div>
+   </div>
+ </div>
  </header>
+
+  
   <div class="container">
 
+    <div class="row">
+      <p>Two of the many topics we discussed in class this semester were the issues of poverty and crime, particulary in Boston. I have been fortunate to have had little experience with either of these issues. Thanks to some great readings, discussions, and guest speakers (survivors of these issues), I feel a lot more confident in my ability to think about these issues and empathize with the people whose lives they affect.</p>
+      <br />
+      <p>I also came to recognize that although I have lived in Boston for a few years now, I still had little understanding of the overall current poverty and crime situation in the city. I thought using public datasets to analyze these issues in aggregate would be a good opportunity to educate myself and potentially others and to better understand the prevalence of experiences such those of survivors we met with in class. </p>
+      <br />
+      <p>In the charts below, I’ve visualized several pieces of 2015 crime and poverty data from the US census bureau and the Boston Open Data Project.</p>
+      <br />
+      <p>Below are plotted violent crimes per 1000 people against rate of family poverty by neighborhood. Hovering over a point reveals the neighborhood and corresponding crime and poverty rates.  By hovering over the points on the chart, we can see Boston’s poorest neighborhoods in terms of family poverty also face the some of the highest violent crime rates.
+      </p>
+      <br />
+    </div>
+
     <div id="scatter-canvas1"></div>
+
+    <p>I was surprised to see that Roxbury has the highest rate of violent crime in Boston, considering it is right next door to Northeastern. Perhaps more surprising however, was Mission Hill’s high poverty rate and its relatively low crime rate.</p>
+    <br />
+
+    <p>I tried to investigate this further by mining BPD FIO data to see if Mission Hill is in general policed more heavily given the high student population. Unfortunately, Boston’s public FIO data does not provide this level of specificity. My guess is that the low crime rate is a result of Mission Hill currently undergoing gentrification. Many students have moved in, pushing many residents out, and there is perhaps as a result now more pressure from Northeastern for BPD to police more heavily there.  </p>
+    <br />
+
+    <p>As we discussed in class, the chart suggests a positive relationship between poverty and crime, though this trend isn’t illustrated as strongly as shooting data.</p>
+    <br />
+
     <div id="bar-canvas1"></div>
 
+    <p>Here, the dichotomy between poor and wealthy Boston neighborhoods is better illustrated. We can see that the top 3 poorest officially-recognized neighborhoods from above (Dorchester, Mattapan, Roxbury) have higher rates of shootings than any other Boston neighborhoods. For Dorchester and Roxbury, the difference astronomical (8- and 6-fold, respectively).</p>
+    <br />
+
+    <p>The following heatmap illustrates the distribution of poverty and crime across Boston’s geography. Use the selector on top to pick criteria for the heatmap, then hover over the neighborhoods to reveal statistics.</p>
+    <br />
 
   </div>
 
@@ -66,10 +101,46 @@
   </div>
 
   <div class="container bottom-container">
-  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-    <div class="calendar-chart" id="cal1"></div>
-    <div class="calendar-chart" id="cal2"></div>
-    <div class="calendar-chart" id="cal3"></div>
+  <p>By playing with the map, it is interesting to see that the Boston neighborhoods where I and many other Northeastern students hang out the most (Back Bay, Downtown, Chinatown) all have the lowest poverty rates. It thus becomes clear how even in a city as small as Boston, the distribution of poverty and gentrification create a divide in perceptions of the city. Residents of communities like Roxbury and Dorchester consistently experience some degree of poverty or its effects, while student and Yuppie communities can remain fairly oblivious.</p>
+  <br />
+
+  <p>Take for instance, the calendar heat maps below, which plot violent crimes committed from January to August 2015 in three different communities. Brighton and Roxbury have relatively equal populations, but lie on different ends of the economic spectrum. Fenway is a smaller community right next to Northeastern home to many students such as myself.</p>
+  <br />
+
+    <div class="row">
+        <h2 class="chart-heading">Brighton</h2>
+      <div class="calendar-chart">
+
+        <div id="cal1">
+
+        </div>
+        <div class="cal-data" id="cd1">
+        hi
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <h2 class="chart-heading">Fenway</h2>
+      <div class="calendar-chart">
+        <div id="cal2">
+
+        </div>
+        <div class="cal-data" id="cd2">
+        hi
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <h2 class="chart-heading">Roxbury</h2>
+      <div class="calendar-chart">
+        <div id="cal3">
+
+        </div>
+        <div class="cal-data" id="cd3">
+        hi
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="container custom-footer">
