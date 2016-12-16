@@ -1,4 +1,4 @@
-var currentSelect = 'unemploymentPct';
+var currentSelect = 'povertyPct';
 
 function getColor(d) {
     return d > 1000 ? '#800026' :
@@ -110,8 +110,8 @@ var getNeighborhoodInfoElement = (props) => {
  	yMap = ((d) => yScale(yValue(d))),
  	yAxis = d3.svg.axis().scale(yScale).orient("left");
 
- var cValue = ((d) => d[cLabel]),
- 	color = d3.scale.category10();
+ var cValue = ((d) => d[scatterDomain]),
+ 	color = d3.scale.linear().range(['#f99f3e', '#db510d']).domain([0,10]);
 
  var scatterSVG = d3.select(scatterDiv).append("svg")
  		.attr("width", width + margin.left + margin.right)
@@ -167,6 +167,8 @@ var getNeighborhoodInfoElement = (props) => {
 		d[barDomain] = d[barDomain];
 		d[barRange] = +d[barRange];
 	});
+
+	data = data.filter((d) => d['Neighborhood'] !== 'West End');
 	
 	// prevent overlap with axis
 	xScale.domain([d3.min(data, xValue)-1, d3.max(data, xValue)+1]);
@@ -199,7 +201,7 @@ var getNeighborhoodInfoElement = (props) => {
       .enter()
       .append("circle")
       .attr("class", "dot")
-      .attr("r", 3.5)
+      .attr("r", 6)
       .attr("cx", xMap)
       .attr("cy", yMap)
       .style("fill", (d) => color(cValue(d)))
@@ -253,11 +255,110 @@ var getNeighborhoodInfoElement = (props) => {
 
 });
 
+// calendar charts
+
+d3.csv('/csv/neighborhood_crime_cmp.csv', (er, data) => {
+
+	var dataSets = {
+		'Brighton': [],
+		'Fenway': [],
+		'Roxbury': []
+	};
+
+
+	data.forEach((d) => {
+		var n = dataSets[d['Neighborhood']];
+		var obj = {};
+		var _date = d['date_str'];
+		
+		var month = (_date.substring(0,2))-1;
+		var day = +_date.substring(3,5);
+		var year = 2015;
+
+		obj['date'] = new Date(year, month, day);
+		obj['count'] = d['violent'];
+		console.log(obj['count']);
+		n.push(obj);
+	});
+
+	console.log(dataSets['Brighton']);
+
+	var chart1 = calendarHeatmap()
+	              .data(dataSets['Brighton'])
+	              .selector('#cal2')
+	              // .colorRange(['#D8E6E7', '#218380'])
+	              .tooltipEnabled(true)
+	              .legendEnabled(false)
+	              .onClick(function (d) {
+	                console.log('onClick callback. Data:', d);
+	              });
+	chart1();  // render the chart
+
+	var chart2 = calendarHeatmap()
+	              .data(dataSets['Fenway'])
+	              .selector('#cal1')
+	              .tooltipEnabled(true)
+	              // .legendEnabled(false)
+	              .onClick(function (d) {
+	                console.log('onClick callback. Data:', d);
+	              });
+	chart2();  // render the chart
+
+	var chart3 = calendarHeatmap()
+	              .data(dataSets['Roxbury'])
+	              .selector('#cal3')
+	              .tooltipEnabled(true)
+	              .legendEnabled(false)
+	              .onClick(function (d) {
+	                console.log('onClick callback. Data:', d);
+	              });
+	chart3();  // render the chart
+
+
+
+
+
+
+});
+
+
 	/**/
+var jsonData;
+
+ var initGeojson = (current) => {
+ 	geojson = L.choropleth(jsonData, {
+			valueProperty:current,
+			scale: ['white', 'red'],
+			steps: 10,
+			mode: 'q',
+			style: {
+				color: '#fff',
+				weight: 2,
+				fillOpacity: 0.8
+			},
+			// style: style,
+			onEachFeature: onEachFeature
+		}).addTo(map);
+ };
+
+ var selectMap = {
+ 	'Unemployment (%)': 'unemploymentPct',
+ 	'Families in Poverty (%)': 'povertyPct',
+ 	'Violent Crimes Per Thousand People': 'vCrime1000',
+ 	'Shootings': 'shootings'
+ };
+
+ var setCholorpleth = (val) => {
+ 	console.log(`change val = ${val}`);
+ 	map.removeLayer(geojson);
+ 	initGeojson(selectMap[val]);
+ };
 
 $(document).ready(() => {
 
 	$.getJSON('/neighborhoods.json', (data) => {
+
+		jsonData = data;
 
 		map = L.map('leaflet-map', {
 			scrollWheelZoom: false,
@@ -272,19 +373,7 @@ $(document).ready(() => {
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
 		}).addTo(map);
 
-		geojson = L.choropleth(data, {
-			valueProperty:currentSelect,
-			scale: ['white', 'red'],
-			steps: 5,
-			mode: 'q',
-			style: {
-				color: '#fff',
-				weight: 2,
-				fillOpacity: 0.8
-			},
-			// style: style,
-			onEachFeature: onEachFeature
-		}).addTo(map);
+		initGeojson(currentSelect);
 
 
 		info = L.control();
@@ -304,7 +393,10 @@ $(document).ready(() => {
 
 	}).error((e) => console.log(e));
 
-	
+
+	$("#choropleth-select").change(function() {
+		setCholorpleth($(this).val());
+	});
 
 });
 
