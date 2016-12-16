@@ -43,19 +43,14 @@ var geojson, map, info;
 
 function resetHighlight(e) {
 	geojson.resetStyle(e.target);
-	info.update();
-}
-
-function zoomToFeature(e) {
-    map.fitBounds(e.target.getBounds());
+	// info.update();
 }
 
 function onEachFeature(feature, layer) {
-	layer.bindPopup(feature.properties.value)
+	// layer.bindPopup(feature.properties.value)
 	layer.on({
 		mouseover: highlightFeature,
-		mouseout: resetHighlight,
-		click: zoomToFeature
+		mouseout: resetHighlight
 	});
 
 	var center = layer.getBounds().getCenter();
@@ -69,11 +64,10 @@ function onEachFeature(feature, layer) {
 }
 
 var getNeighborhoodInfoElement = (props) => {
-	var header = '<h4>Neighborhood Stats</h4>';
 	return props ?
 		props.pop ?
-		`${header} 												\
-		<b>${props.Name}</b>									\
+		` 												\
+		<h4>${props.Name}</b>									\
 		</br />													\
 		<p>Families in Poverty: ${props.povertyPct}%</p>			\
         <p>Unemployment: ${props.unemploymentPct}%</p>				\
@@ -81,8 +75,8 @@ var getNeighborhoodInfoElement = (props) => {
         <p>Shootings: ${props.shootings}</p>					\
 		`
 		: `${header} 											\
-		  <b>${props.Name}</b>`									
-		: 'Hover over a neighborhood';
+		  <h4>${props.Name}</h4>`									
+		: '<h4>Hover over a neighborhood</h4>';
 };
 
 
@@ -94,6 +88,7 @@ var getNeighborhoodInfoElement = (props) => {
  	scatterRange = 'violentCrimesPerThousandPpl',
  	cLabel = 'Neighborhood',
  	scatterDiv = '#scatter-canvas1';
+
 
  var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
@@ -123,6 +118,7 @@ var getNeighborhoodInfoElement = (props) => {
  	.attr("class", "tooltip")
  	.style("opacity", 1);
 
+
  var formattedValues = (d) => {
  	return `(${xValue(d)}, ${yValue(d)})`;
  };
@@ -132,9 +128,14 @@ var getNeighborhoodInfoElement = (props) => {
   */
 
   var barDomain = 'Neighborhood',
-  	barRange = 'shootings';
+  	barRange = 'shootings',
+  	barDiv = "#bar-canvas1";
 
-  var barSVG = d3.select("#bar-canvas1").append("svg")
+	var tooltipBar = d3.select(barDiv).append("div")
+ 	.attr("class", "tooltip")
+ 	.style("opacity", 1);
+
+  var barSVG = d3.select(barDiv).append("svg")
   	.attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom + 120)
   	.append("g")
@@ -251,11 +252,30 @@ var getNeighborhoodInfoElement = (props) => {
       	.attr("x", (d) => barX(d[barDomain]))
       	.attr("width", barX.rangeBand())
       	.attr("y", (d) => barY(d[barRange]))
-      	.attr("height", (d, i) => height - barY(d[barRange]));
+      	.attr("height", (d, i) => height - barY(d[barRange]))
+      	.on("mouseover", (d) => {
+      	tooltipBar.transition()
+      		.duration(200)
+      		.style("opacity", .9);
+      	tooltipBar.html(d[barRange])
+      		.style("left", (d3.event.pageX + 5) + "px")
+              .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", (d) => {
+      	tooltipBar.transition()
+      		.duration(500)
+      		.style("opacity", 0);
+      });
 
 });
 
 // calendar charts
+
+var jqueryHack;
+
+var showCalendarDetails = (d, id) => {
+	jqueryHack(d, id);
+};
 
 d3.csv('/csv/neighborhood_crime_cmp.csv', (er, data) => {
 
@@ -277,11 +297,9 @@ d3.csv('/csv/neighborhood_crime_cmp.csv', (er, data) => {
 
 		obj['date'] = new Date(year, month, day);
 		obj['count'] = d['violent'];
-		console.log(obj['count']);
 		n.push(obj);
 	});
 
-	console.log(dataSets['Brighton']);
 
 	var chart1 = calendarHeatmap()
 	              .data(dataSets['Brighton'])
@@ -290,7 +308,7 @@ d3.csv('/csv/neighborhood_crime_cmp.csv', (er, data) => {
 	              .tooltipEnabled(true)
 	              .legendEnabled(false)
 	              .onClick(function (d) {
-	                console.log('onClick callback. Data:', d);
+	                showCalendarDetails(d, "#cd2");
 	              });
 	chart1();  // render the chart
 
@@ -300,7 +318,7 @@ d3.csv('/csv/neighborhood_crime_cmp.csv', (er, data) => {
 	              .tooltipEnabled(true)
 	              // .legendEnabled(false)
 	              .onClick(function (d) {
-	                console.log('onClick callback. Data:', d);
+	                showCalendarDetails(d, "#cd1");
 	              });
 	chart2();  // render the chart
 
@@ -310,7 +328,7 @@ d3.csv('/csv/neighborhood_crime_cmp.csv', (er, data) => {
 	              .tooltipEnabled(true)
 	              .legendEnabled(false)
 	              .onClick(function (d) {
-	                console.log('onClick callback. Data:', d);
+	                showCalendarDetails(d, "#cd3");
 	              });
 	chart3();  // render the chart
 
@@ -397,6 +415,10 @@ $(document).ready(() => {
 	$("#choropleth-select").change(function() {
 		setCholorpleth($(this).val());
 	});
+
+	jqueryHack = function(d, id) {
+		$(id).html(`<h2>${d.date.getMonth()} ${d.date.getDate()}</h2>`);
+	};
 
 });
 

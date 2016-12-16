@@ -5,7 +5,9 @@
 	text-align: center;
 }
 
-.heading-text h1,h3 {
+h1.heading-text {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 900 !important;
 	color: black;
 	text-align: center;
 }
@@ -13,14 +15,20 @@
 	margin-bottom: 75px;
 }
 
+.chart-canvas svg {
+	display: block;
+	margin: auto;
+}
+
 #bar-canvas1 {
+	margin-top:20px;
 	margin-bottom: 35px;
 }
 
 .chart-heading {
+	text-align: center;
     font-size: 28px;
-/*    margin-top: 60px;*/
-    font-weight: 600;
+    font-weight: 300;
 }
 
 .plot-title {
@@ -28,10 +36,15 @@
 }
 
 p {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
 	padding: 0px 30px;
 	line-height: 1.5;
 	font-size: 20px;
-	margin: 30px 0px;
+	margin: 30px auto;
+}
+.row > p {
+	width: 40vw;
 }
 .chart-container {
 	position: relative;
@@ -86,8 +99,20 @@ p {
 	z-index:8999;
 }
 
-.info {
+div.info {
+	margin-right:50px;
+	padding: 20px;
 	color: #fff;
+}
+
+.info h4 {
+	font-size: 36px;
+	text-align: left;
+}
+
+.info * {
+	padding:0px;
+	margin-right: 180px;
 }
 #map-wrap {
 	margin-bottom: 40px;
@@ -132,11 +157,12 @@ p {
 /* bar chart */
 
 .bar {
-  fill: steelblue;
+  fill: #e82f12;
+  opacity: 0.7;
 }
 
 .bar:hover {
-  fill: brown;
+  opacity: 1;
 }
 
 

@@ -14,8 +14,9 @@
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
   <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
-     <link href="/css/custom.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,900" rel="stylesheet">
+   <link rel="stylesheet" href="/css/leaflet.css" />
+   <link href="/css/custom.css" rel="stylesheet">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -54,39 +55,34 @@
   <div class="container">
 
     <div class="row">
-      <p>Two of the many topics we discussed in class this semester were the issues of poverty and crime, particulary in Boston. I have been fortunate to have had little experience with either of these issues. Thanks to some great readings, discussions, and guest speakers (survivors of these issues), I feel a lot more confident in my ability to think about these issues and empathize with the people whose lives they affect.</p>
-      <br />
-      <p>I also came to recognize that although I have lived in Boston for a few years now, I still had little understanding of the overall current poverty and crime situation in the city. I thought using public datasets to analyze these issues in aggregate would be a good opportunity to educate myself and potentially others and to better understand the prevalence of experiences such those of survivors we met with in class. </p>
-      <br />
-      <p>In the charts below, I’ve visualized several pieces of 2015 crime and poverty data from the US census bureau and the Boston Open Data Project.</p>
-      <br />
-      <p>Below are plotted violent crimes per 1000 people against rate of family poverty by neighborhood. Hovering over a point reveals the neighborhood and corresponding crime and poverty rates.  By hovering over the points on the chart, we can see Boston’s poorest neighborhoods in terms of family poverty also face the some of the highest violent crime rates.
-      </p>
+      <p>Two topics we discussed in class this semester were poverty and crime. Thanks to class content, I feel I understand these issues more and better relate to people whose lives are deeply impacted by them.</p>
+     
+      <p>I also learned how little I know about my home for the past few years: Boston. I’ve always been vaguely aware that poverty and crime are issues here as in other cities, but that was really the extent of my knowledge. So, I thought I’d use data to understand the situation more fully. </p>
+      
+      <p>In the charts below, I’ve visualized several pieces of 2015 crime and poverty data from the US Census Bureau and the City of Boston. I learned a lot in the process of making them, and hope this site can further educate others.</p>
       <br />
     </div>
 
     <div class="row">
-      <div id="scatter-canvas1"></div>
+      <div id="scatter-canvas1" class="chart-canvas"></div>
 
-      <p>I was surprised to see that Roxbury has the highest rate of violent crime in Boston, considering it is right next door to Northeastern. Perhaps more surprising however, was Mission Hill’s high poverty rate and its relatively low crime rate.</p>
-      <br />
+      <p>I was surprised to see that Roxbury has the highest rate of violent crime in Boston, considering its proximity to Northeastern. Perhaps more surprising however, was Mission Hill’s high poverty rate and its relatively low crime rate.</p>
 
-      <p>I tried to investigate this further by mining BPD FIO data to see if Mission Hill is in general policed more heavily given the high student population. Unfortunately, Boston’s public FIO data does not provide this level of specificity. My guess is that the low crime rate is a result of Mission Hill currently undergoing gentrification. Many students have moved in, pushing many residents out, and there is perhaps as a result now more pressure from Northeastern for BPD to police more heavily there.  </p>
-      <br />
-
+      <p>I tried to investigate this further by mining BPD FIO data. Unfortunately, the FIO dataset does not include exact location data, so it is impossible to see which FIO activity took place in Mission Hill. My guess is that the low crime rate is a product of gentrification. Many students have moved to Mission Hill, pushing existing residents out. In light of this trend, it is possible that Northeastern pushes BPD to police more heavily there.</p>
+ 
       <p>As we discussed in class, the chart suggests a positive relationship between poverty and crime, though this trend isn’t illustrated as strongly as shooting data.</p>
       <br />
     </div>
 
     <div class="row">
 
-      <h2 class="section-heading plot-title">Shootings - January to August 2015</h2>
-      <div id="bar-canvas1"></div>
+      <div class="chart-heading">Shootings - January to August 2015</div>
+      <div id="bar-canvas1" class="chart-canvas"></div>
 
-      <p>Here, the dichotomy between poor and wealthy Boston neighborhoods is better illustrated. We can see that the top 3 poorest officially-recognized neighborhoods from above (Dorchester, Mattapan, Roxbury) have higher rates of shootings than any other Boston neighborhoods. For Dorchester and Roxbury, the difference astronomical (8- and 6-fold, respectively).</p>
+      <p>Here, the dichotomy between poor and wealthy Boston neighborhoods is better illustrated. We can see that the top 3 poorest neighborhoods from above (Dorchester, Mattapan, Roxbury) have higher rates of shootings than any other neighborhoods. For Dorchester and Roxbury, the difference is astronomical (8- and 6-fold, respectively).</p>
       <br />
 
-      <p>The following heatmap illustrates the distribution of poverty and crime across Boston’s geography. Use the selector on top to pick criteria for the heatmap, then hover over the neighborhoods to reveal statistics.</p>
+      <p>The following heatmap illustrates the distribution of poverty and crime across Boston’s geography. Use the selector on top to pick criteria for the heatmap, then hover over a neighborhood to reveal stats.</p>
       <br />
     </div>
   </div>
@@ -106,14 +102,15 @@
   </div>
 
   <div class="container bottom-container">
+  <div class="row">
   <p>By playing with the map, it is interesting to see that the Boston neighborhoods where I and many other Northeastern students hang out the most (Back Bay, Downtown, Chinatown) all have the lowest poverty rates. It thus becomes clear how even in a city as small as Boston, the distribution of poverty and gentrification create a divide in perceptions of the city. Residents of communities like Roxbury and Dorchester consistently experience some degree of poverty or its effects, while student and Yuppie communities can remain fairly oblivious.</p>
   <br />
 
   <p>Take for instance, the calendar heat maps below, which plot violent crimes committed from January to August 2015 in three different communities. Brighton and Roxbury have relatively equal populations, but lie on different ends of the economic spectrum. Fenway is a smaller community right next to Northeastern home to many students such as myself.</p>
   <br />
-
+  </div>
     <div class="row">
-        <h2 class="chart-heading">Brighton</h2>
+        <h2 class="chart-heading">Fenway</h2>
       <div class="calendar-chart">
 
         <div id="cal1">
@@ -126,7 +123,7 @@
     </div>
 
     <div class="row">
-      <h2 class="chart-heading">Fenway</h2>
+      <h2 class="chart-heading">Brighton</h2>
       <div class="calendar-chart">
         <div id="cal2">
 
@@ -159,7 +156,7 @@
 
 
     <div class="row">
-      <h2 class="section-heading">Conclusion</h2>
+      <h2 class="chart-heading">Conclusion</h2>
       <p>Exploring and visualizing this data was a meaningful experience for me, but I recognize that I only scratched the surface. Given more time, I would have really like to continue exploring the socioeconomic differences between neighborhoods and there is a lot more data to do so. The US Census bureau has a lot to offer and I look forward to seeing the City of Boston’s data portal continue to add new information. I will likely continue to play with this site and hopefully further increase my understanding of these topics.</p>
       <br />
     </div>

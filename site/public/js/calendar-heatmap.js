@@ -18,6 +18,7 @@ function calendarHeatmap() {
   var tooltipUnit = 'contribution';
   var legendEnabled = true;
   var onClick = null;
+  var onMouseOver = null;
   var weekStart = 0; //0 for Sunday, 1 for Monday
 
   // setters and getters
@@ -62,6 +63,14 @@ function calendarHeatmap() {
     onClick = value;
     return chart;
   };
+
+  chart.onMouseOver = function (value) {
+    if (!arguments.length) { return onMouseOver(); }
+    console.log("passed mouseover");
+    onMouseOver = value;
+    return chart;
+  };
+
 
   function chart() {
 
@@ -111,6 +120,15 @@ function calendarHeatmap() {
         dayRects.on('click', function (d) {
           var count = countForDate(d);
           onClick({ date: d, count: count});
+        });
+      }
+
+      if (typeof onMouseOver === 'function') {
+        console.log("mouseover is a function");
+        dayRects.on('mouseover', function (d) {
+          console.log("mouseover");
+          var count = countForDate(d);
+          onMouseOver({ date: d, count: count});
         });
       }
 
