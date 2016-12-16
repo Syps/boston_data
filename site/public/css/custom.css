@@ -9,14 +9,22 @@
 	color: black;
 	text-align: center;
 }
-#scatter-canvas1, #bar-canvas1 {
+#scatter-canvas1 {
 	margin-bottom: 75px;
+}
+
+#bar-canvas1 {
+	margin-bottom: 35px;
 }
 
 .chart-heading {
     font-size: 28px;
 /*    margin-top: 60px;*/
     font-weight: 600;
+}
+
+.plot-title {
+	margin-bottom: 60px;
 }
 
 p {
@@ -43,12 +51,43 @@ p {
 }
 
 
+.custom-selector select {
+
+}
+
+#choropleth-select {
+	width: 100%;
+	font-size: 25px;
+	  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44px' height='44px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>");
+  background-color:#fff;
+  background-repeat:no-repeat;
+  background-position: right 10px top 15px;
+  background-size: 16px 16px;
+  color:black;
+  padding:12px 12px 20px 12px;
+  font-weight:bold;
+  text-align:center;
+
+  border: 3px solid black;
+  -webkit-appearance: none;
+  outline:0;
+  -webkit-transition:0.3s ease all;
+	   -moz-transition:0.3s ease all;
+	    -ms-transition:0.3s ease all;
+	     -o-transition:0.3s ease all;
+	        transition:0.3s ease all;
+}
+
 #leaflet-map {
 	top:0;
 	left:0;
 	height: 80vh;
 	width: 100%;
 	z-index:8999;
+}
+
+.info {
+	color: #fff;
 }
 #map-wrap {
 	margin-bottom: 40px;

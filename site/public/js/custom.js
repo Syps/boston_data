@@ -220,6 +220,7 @@ var getNeighborhoodInfoElement = (props) => {
       });
 
       data = data.filter((d) => d[barRange] > 0);
+
       // bar chart
       barX.domain(data.map((d) => d[barDomain]));
       barY.domain([0, d3.max(data, (d) => d[barRange])]);
@@ -241,8 +242,7 @@ var getNeighborhoodInfoElement = (props) => {
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Shootings in 2015");
+      .style("text-anchor", "end");
 
       barSVG.selectAll("bar")
       	.data(data)
@@ -345,7 +345,7 @@ var jsonData;
  	'Unemployment (%)': 'unemploymentPct',
  	'Families in Poverty (%)': 'povertyPct',
  	'Violent Crimes Per Thousand People': 'vCrime1000',
- 	'Shootings': 'shootings'
+ 	'Shootings (January - August 2015)': 'shootings'
  };
 
  var setCholorpleth = (val) => {

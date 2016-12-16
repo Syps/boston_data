@@ -65,25 +65,30 @@
       <br />
     </div>
 
-    <div id="scatter-canvas1"></div>
+    <div class="row">
+      <div id="scatter-canvas1"></div>
 
-    <p>I was surprised to see that Roxbury has the highest rate of violent crime in Boston, considering it is right next door to Northeastern. Perhaps more surprising however, was Mission Hill’s high poverty rate and its relatively low crime rate.</p>
-    <br />
+      <p>I was surprised to see that Roxbury has the highest rate of violent crime in Boston, considering it is right next door to Northeastern. Perhaps more surprising however, was Mission Hill’s high poverty rate and its relatively low crime rate.</p>
+      <br />
 
-    <p>I tried to investigate this further by mining BPD FIO data to see if Mission Hill is in general policed more heavily given the high student population. Unfortunately, Boston’s public FIO data does not provide this level of specificity. My guess is that the low crime rate is a result of Mission Hill currently undergoing gentrification. Many students have moved in, pushing many residents out, and there is perhaps as a result now more pressure from Northeastern for BPD to police more heavily there.  </p>
-    <br />
+      <p>I tried to investigate this further by mining BPD FIO data to see if Mission Hill is in general policed more heavily given the high student population. Unfortunately, Boston’s public FIO data does not provide this level of specificity. My guess is that the low crime rate is a result of Mission Hill currently undergoing gentrification. Many students have moved in, pushing many residents out, and there is perhaps as a result now more pressure from Northeastern for BPD to police more heavily there.  </p>
+      <br />
 
-    <p>As we discussed in class, the chart suggests a positive relationship between poverty and crime, though this trend isn’t illustrated as strongly as shooting data.</p>
-    <br />
+      <p>As we discussed in class, the chart suggests a positive relationship between poverty and crime, though this trend isn’t illustrated as strongly as shooting data.</p>
+      <br />
+    </div>
 
-    <div id="bar-canvas1"></div>
+    <div class="row">
 
-    <p>Here, the dichotomy between poor and wealthy Boston neighborhoods is better illustrated. We can see that the top 3 poorest officially-recognized neighborhoods from above (Dorchester, Mattapan, Roxbury) have higher rates of shootings than any other Boston neighborhoods. For Dorchester and Roxbury, the difference astronomical (8- and 6-fold, respectively).</p>
-    <br />
+      <h2 class="section-heading plot-title">Shootings - January to August 2015</h2>
+      <div id="bar-canvas1"></div>
 
-    <p>The following heatmap illustrates the distribution of poverty and crime across Boston’s geography. Use the selector on top to pick criteria for the heatmap, then hover over the neighborhoods to reveal statistics.</p>
-    <br />
+      <p>Here, the dichotomy between poor and wealthy Boston neighborhoods is better illustrated. We can see that the top 3 poorest officially-recognized neighborhoods from above (Dorchester, Mattapan, Roxbury) have higher rates of shootings than any other Boston neighborhoods. For Dorchester and Roxbury, the difference astronomical (8- and 6-fold, respectively).</p>
+      <br />
 
+      <p>The following heatmap illustrates the distribution of poverty and crime across Boston’s geography. Use the selector on top to pick criteria for the heatmap, then hover over the neighborhoods to reveal statistics.</p>
+      <br />
+    </div>
   </div>
 
   <div id="map-wrap">
@@ -92,7 +97,7 @@
         <option>Families in Poverty (%)</option>
         <option>Unemployment (%)</option>
         <option>Violent Crimes Per Thousand People</option>
-        <option>Shootings</option>
+        <option>Shootings (January - August 2015)</option>
       </select>
     </div>
     <div class="chart-container">
@@ -119,6 +124,7 @@
         </div>
       </div>
     </div>
+
     <div class="row">
       <h2 class="chart-heading">Fenway</h2>
       <div class="calendar-chart">
@@ -130,6 +136,7 @@
         </div>
       </div>
     </div>
+
     <div class="row">
       <h2 class="chart-heading">Roxbury</h2>
       <div class="calendar-chart">
@@ -140,6 +147,21 @@
         hi
         </div>
       </div>
+    </div>
+
+
+    <div class="row">
+      <p>Most days on the first two calendars are white, meaning no violent crimes occurred. On the other hand, only 9 days occurred in which no violent crimes were reported in Roxbury over the 8 month period. The heat map coloring is also relative to each neighborhood. This means that the darkest square for Brighton indicates a day where 3 crimes were committed, whereas 13 crimes were committed in Roxbury’s darkest square.</p>
+      <br />
+      <p>A discussion we had in class is also of note here. Specifically, we discussed how poor communities with higher crime rates generally have less trust of the police and report crimes less frequently. Meanwhile, it is not hard to image that residents of Brighton and Fenway will likely report a violent crime if they see one. So the difference may be even more significant than the heat maps suggest. </p>
+      <br />
+    </div>
+
+
+    <div class="row">
+      <h2 class="section-heading">Conclusion</h2>
+      <p>Exploring and visualizing this data was a meaningful experience for me, but I recognize that I only scratched the surface. Given more time, I would have really like to continue exploring the socioeconomic differences between neighborhoods and there is a lot more data to do so. The US Census bureau has a lot to offer and I look forward to seeing the City of Boston’s data portal continue to add new information. I will likely continue to play with this site and hopefully further increase my understanding of these topics.</p>
+      <br />
     </div>
   </div>
 
