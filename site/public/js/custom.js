@@ -210,7 +210,11 @@ var getNeighborhoodInfoElement = (props) => {
       	tooltip.transition()
       		.duration(200)
       		.style("opacity", .9);
-      	tooltip.html(`${d[cLabel]}<br/>${formattedValues(d)}`)
+      	tooltip.html(`<div class="tthd"><h5 class="tth">${d[cLabel]}</h5>	\
+      			<br/>
+      			<p>${d[scatterDomain].toFixed(2)}% of families in poverty</p>				\
+      			<p>${d[scatterRange].toFixed(2)} violent crimes per 1,000 people</p> \
+      			</div>`)
       		.style("left", (d3.event.pageX + 5) + "px")
               .style("top", (d3.event.pageY - 28) + "px");
       })
@@ -254,12 +258,13 @@ var getNeighborhoodInfoElement = (props) => {
       	.attr("y", (d) => barY(d[barRange]))
       	.attr("height", (d, i) => height - barY(d[barRange]))
       	.on("mouseover", (d) => {
-      	tooltipBar.transition()
-      		.duration(200)
-      		.style("opacity", .9);
-      	tooltipBar.html(d[barRange])
+	      	tooltipBar.transition()
+	      		.duration(200)
+	      		.style("opacity", .9);
+      	tooltipBar.html(`${d[barRange]} shootings`)
       		.style("left", (d3.event.pageX + 5) + "px")
-              .style("top", (d3.event.pageY - 28) + "px");
+              .style("top", (d3.event.pageY - 40) + "px")
+              .style("font-size", "15px");
       })
       .on("mouseout", (d) => {
       	tooltipBar.transition()
@@ -304,10 +309,9 @@ d3.csv('/csv/neighborhood_crime_cmp.csv', (er, data) => {
 	var chart1 = calendarHeatmap()
 	              .data(dataSets['Brighton'])
 	              .selector('#cal2')
-	              // .colorRange(['#D8E6E7', '#218380'])
 	              .tooltipEnabled(true)
 	              .legendEnabled(false)
-	              .onClick(function (d) {
+	              .onMouseOver(function (d) {
 	                showCalendarDetails(d, "#cd2");
 	              });
 	chart1();  // render the chart
@@ -316,8 +320,7 @@ d3.csv('/csv/neighborhood_crime_cmp.csv', (er, data) => {
 	              .data(dataSets['Fenway'])
 	              .selector('#cal1')
 	              .tooltipEnabled(true)
-	              // .legendEnabled(false)
-	              .onClick(function (d) {
+	              .onMouseOver(function (d) {
 	                showCalendarDetails(d, "#cd1");
 	              });
 	chart2();  // render the chart
@@ -327,7 +330,7 @@ d3.csv('/csv/neighborhood_crime_cmp.csv', (er, data) => {
 	              .selector('#cal3')
 	              .tooltipEnabled(true)
 	              .legendEnabled(false)
-	              .onClick(function (d) {
+	              .onMouseOver(function (d) {
 	                showCalendarDetails(d, "#cd3");
 	              });
 	chart3();  // render the chart
@@ -416,8 +419,12 @@ $(document).ready(() => {
 		setCholorpleth($(this).val());
 	});
 
+	var monthNames = ["January", "February", "March", 
+		"April", "May", "June", "July", "August", "September", 
+		"October", "November", "December"];
 	jqueryHack = function(d, id) {
-		$(id).html(`<h2>${d.date.getMonth()} ${d.date.getDate()}</h2>`);
+		$(id).html(`<h2>${monthNames[d.date.getMonth()]} ${d.date.getDate()}</h2>	\
+				<p>${d.count} violent crime incident${+d.count === 1 ? "" : "s"}</p>`);
 	};
 
 });

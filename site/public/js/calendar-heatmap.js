@@ -1,8 +1,8 @@
 
 function calendarHeatmap() {
   // defaults
-  var width = 750;
-  var height = 110;
+  var width = 550;
+  var height = 130;
   var legendWidth = 150;
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
@@ -114,6 +114,8 @@ function calendarHeatmap() {
         })
         .attr('y', function (d, i) {
           return MONTH_LABEL_PADDING + formatWeekday(d.getDay()) * (SQUARE_LENGTH + SQUARE_PADDING);
+        }).on('mouseover', function(d) {
+          console.log("asdfasd");
         });
 
       if (typeof onClick === 'function') {
@@ -125,7 +127,7 @@ function calendarHeatmap() {
 
       if (typeof onMouseOver === 'function') {
         console.log("mouseover is a function");
-        dayRects.on('mouseover', function (d) {
+        dayRects.on('mouseover', function (d, i) {
           console.log("mouseover");
           var count = countForDate(d);
           onMouseOver({ date: d, count: count});
@@ -134,17 +136,20 @@ function calendarHeatmap() {
 
       if (chart.tooltipEnabled()) {
         dayRects.on('mouseover', function (d, i) {
-          tooltip = d3.select(chart.selector())
-            .append('div')
-            .attr('class', 'day-cell-tooltip')
-            .html(tooltipHTMLForDate(d))
-            .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH + 'px'; })
-            .style('top', function () {
-              return formatWeekday(d.getDay()) * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px';
-            });
+          console.log("mouseover");
+          // tooltip = d3.select(chart.selector())
+          //   .append('div')
+          //   .attr('class', 'day-cell-tooltip')
+          //   .html(tooltipHTMLForDate(d))
+          //   .style('left', function () { return Math.floor(i / 7) * SQUARE_LENGTH + 'px'; })
+          //   .style('top', function () {
+          //     return formatWeekday(d.getDay()) * (SQUARE_LENGTH + SQUARE_PADDING) + MONTH_LABEL_PADDING * 3 + 'px';
+          //   });
+          onMouseOver({ date: d, count: countForDate(d)});
         })
         .on('mouseout', function (d, i) {
-          tooltip.remove();
+          console.log("mouseout");
+          // tooltip.remove();
         });
       }
 

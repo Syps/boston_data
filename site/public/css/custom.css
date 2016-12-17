@@ -12,6 +12,7 @@ h1.heading-text {
 	text-align: center;
 }
 #scatter-canvas1 {
+	cursor: crosshair;
 	margin-bottom: 75px;
 }
 
@@ -21,6 +22,7 @@ h1.heading-text {
 }
 
 #bar-canvas1 {
+	cursor: crosshair;
 	margin-top:20px;
 	margin-bottom: 35px;
 }
@@ -52,23 +54,31 @@ p {
 }
 
 .cal-data {
-
+	padding-top:30px;
+	text-align: center;
 	height:100%;
+	vertical-align: top;
+}
+
+.cal-data * {
+	padding-left:60px;
+	display: block;
+}
+
+.cal-data h2 {
+	font-size: 24px;
 }
 
 .calendar-chart {
+	padding-left: 13%;
 	margin-bottom: 50px;
 }
-.calendar-chart *{
+.calendar-chart > * {
 	display: inline-block;
 }
 
-
-.custom-selector select {
-
-}
-
 #choropleth-select {
+
 	width: 100%;
 	font-size: 25px;
 	  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44px' height='44px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>");
@@ -77,11 +87,12 @@ p {
   background-position: right 10px top 15px;
   background-size: 16px 16px;
   color:black;
-  padding:12px 12px 20px 12px;
-  font-weight:bold;
+  padding:12px 12px 20px 42%;
+  font-weight:300;
+  font-family: 'Roboto', sans-serif;
   text-align:center;
 
-  border: 3px solid black;
+  border: 2px solid black;
   -webkit-appearance: none;
   outline:0;
   -webkit-transition:0.3s ease all;
@@ -104,6 +115,10 @@ div.info {
 	padding: 20px;
 	color: #fff;
 }
+
+/*.tthd {
+	border: 1px solid black;
+}*/
 
 .info h4 {
 	font-size: 36px;
@@ -165,7 +180,19 @@ div.info {
   opacity: 1;
 }
 
+.tthd h5 {
+	font-size:20px;
+	font-weight:900;
+}
 
+.tthd p {
+	font-size:15px;
+}
+.tthd {}
+.tthd * {
+	margin: 0px;
+	padding: 0px 0px 0px 20px;
+}
 
 /* from calendar-heatmap by
 	https://github.com/DKirwan/calendar-heatmap
