@@ -353,6 +353,7 @@ d3.csv('/csv/neighborhood_crime_cmp.csv', (er, data) => {
 var jsonData;
 
  var initGeojson = (current) => {
+
  	geojson = L.choropleth(jsonData, {
 			valueProperty:current,
 			scale: ['white', 'red'],
@@ -385,6 +386,8 @@ $(document).ready(() => {
 
 	$.getJSON('/neighborhoods.json', (data) => {
 
+		console.log(data);
+		data.features = data.features.filter((d) => d.properties.Name != "Harbor Islands");
 		jsonData = data;
 
 		var getZoom = () => {

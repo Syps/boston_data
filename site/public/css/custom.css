@@ -119,7 +119,11 @@ p {
 div.info {
 	margin-right:50px;
 	padding: 20px;
+	padding-bottom: 0px;
 	color: #fff;
+	background: rgba(25,26,26, 0.7);
+	border-radius: 2px;
+
 }
 
 /*.tthd {
