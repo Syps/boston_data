@@ -405,7 +405,6 @@ $(document).ready(() => {
 		    return this._div;
 		};
 
-		// method that we will use to update the control based on feature properties passed
 		info.update = function(props) {
 		    this._div.innerHTML = getNeighborhoodInfoElement(props);
 		};
@@ -426,6 +425,19 @@ $(document).ready(() => {
 		$(id).html(`<h2>${monthNames[d.date.getMonth()]} ${d.date.getDate()}</h2>	\
 				<p>${d.count} violent crime incident${+d.count === 1 ? "" : "s"}</p>`);
 	};
+
+	var setClickScrollListener = (btnClickId, scrollToId, moreOffset) => {
+		$(btnClickId).click(function() {
+			$('html, body').animate({
+				scrollTop: $(scrollToId).offset().top - 200
+			}, 2000);
+		});
+	};
+
+	setClickScrollListener("#cxpBtn", "#scatter-canvas1");
+	setClickScrollListener("#shootingsBtn", "#bar-canvas1");
+	setClickScrollListener("#mapBtn", "#map-wrap");
+	setClickScrollListener("#calendarBtn", "#cal1");
 
 });
 

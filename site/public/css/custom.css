@@ -5,11 +5,13 @@
 	text-align: center;
 }
 
-h1.heading-text {
+.custom-post-heading h1, h3 {
 	font-family: 'Roboto', sans-serif;
 	font-weight: 900 !important;
 	color: black;
 	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 2px;
 }
 #scatter-canvas1 {
 	cursor: crosshair;
@@ -188,7 +190,9 @@ div.info {
 .tthd p {
 	font-size:15px;
 }
-.tthd {}
+.tthd {
+	background: #fff;
+}
 .tthd * {
 	margin: 0px;
 	padding: 0px 0px 0px 20px;
@@ -200,7 +204,7 @@ div.info {
 text.month-name,
 text.calendar-heatmap-legend-text,
 text.day-initial {
-  font-size: 10px;
+  font-size: 12px;
   fill: #aaaaaa;
   font-family: Helvetica, arial, 'Open Sans', sans-serif
 }

@@ -167,20 +167,20 @@ function calendarHeatmap() {
             .attr('class', 'calendar-heatmap-legend')
             .attr('width', SQUARE_LENGTH)
             .attr('height', SQUARE_LENGTH)
-            .attr('x', function (d, i) { return (width - legendWidth) + (i + 1) * 13; })
-            .attr('y', height + SQUARE_PADDING)
+            .attr('x', function (d, i) { return (i + 2) * 13; })
+            .attr('y', height + SQUARE_PADDING + 15)
             .attr('fill', function (d) { return d; });
 
         legendGroup.append('text')
           .attr('class', 'calendar-heatmap-legend-text')
-          .attr('x', width - legendWidth - 13)
-          .attr('y', height + SQUARE_LENGTH)
+          .attr('x', 0)
+          .attr('y', height + SQUARE_LENGTH + 14)
           .text('Less');
 
         legendGroup.append('text')
           .attr('class', 'calendar-heatmap-legend-text')
-          .attr('x', (width - legendWidth + SQUARE_PADDING) + (colorRange.length + 1) * 13)
-          .attr('y', height + SQUARE_LENGTH)
+          .attr('x', (colorRange.length + 2) * 16)
+          .attr('y', height + SQUARE_LENGTH + 14)
           .text('More');
       }
 
@@ -200,7 +200,7 @@ function calendarHeatmap() {
               return moment(d).isSame(element, 'month') && moment(d).isSame(element, 'year');
             });
 
-            return Math.floor(matchIndex / 7) * (SQUARE_LENGTH + SQUARE_PADDING);
+            return Math.floor(matchIndex / 6.8) * (SQUARE_LENGTH + SQUARE_PADDING);
           })
           .attr('y', 0);  // fix these to the top
 
