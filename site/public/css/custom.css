@@ -92,13 +92,14 @@ p {
   background-position: right 10px top 15px;
   background-size: 16px 16px;
   color:black;
-  padding:12px 12px 20px 42%;
+  padding:12px 12px 20px 12px;
   font-weight:300;
   font-family: 'Roboto', sans-serif;
   text-align:center;
 
   border: 2px solid black;
   -webkit-appearance: none;
+  -moz-appearance: none;
   outline:0;
   -webkit-transition:0.3s ease all;
 	   -moz-transition:0.3s ease all;
