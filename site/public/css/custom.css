@@ -1,4 +1,5 @@
 
+
 .custom-post-heading {
 	padding: 150px 0;
 	color: black;
@@ -50,6 +51,8 @@ p {
 .row > p {
 	width: 40vw;
 }
+
+
 .chart-container {
 	position: relative;
 	
@@ -230,4 +233,21 @@ rect.day-cell:hover {
 }
 .calendar-heatmap {
   box-sizing: initial;
+}
+
+@media only screen and (max-width: 1400px) {
+.row > p {
+	width: 55vw;
+}
+
+#leaflet-map {
+	height: 90vh;
+}
+
+.info * {
+	margin-right: 10px;
+}
+.info {
+	margin-right: 20px;
+}
 }

@@ -54,13 +54,13 @@ function onEachFeature(feature, layer) {
 	});
 
 	var center = layer.getBounds().getCenter();
-    var label = L.marker(center, {
-      icon: L.divIcon({
-        iconSize: null,
-        className: 'label',
-        html: '<div>' + feature.properties.Name + '</div>'
-      })
-    }).addTo(map);
+    // var label = L.marker(center, {
+    //   icon: L.divIcon({
+    //     iconSize: null,
+    //     className: 'label',
+    //     html: '<div>' + feature.properties.Name + '</div>'
+    //   })
+    // }).addTo(map);
 }
 
 var getNeighborhoodInfoElement = (props) => {
@@ -80,6 +80,12 @@ var getNeighborhoodInfoElement = (props) => {
 };
 
 
+var valForScreenSize = (small, large) => {
+	if (document.documentElement.clientWidth > 1400) {
+		return large;
+	}
+	return small;
+};
  /*
  * scatter plot
  */
@@ -91,8 +97,8 @@ var getNeighborhoodInfoElement = (props) => {
 
 
  var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = valForScreenSize(700 ,960) - margin.left - margin.right,
+    height = valForScreenSize(365,500) - margin.top - margin.bottom;
 
  var xValue = ((d) => d[scatterDomain]),
  	xScale = d3.scale.linear().range([0, width]),
@@ -381,11 +387,19 @@ $(document).ready(() => {
 
 		jsonData = data;
 
+		var getZoom = () => {
+			return valForScreenSize(11.5, 11.5);
+		};
+
+		var getCoords = () => {
+			return valForScreenSize([42.317, -70.97] ,[42.317, -70.87]);
+		};
+
 		map = L.map('leaflet-map', {
 			scrollWheelZoom: false,
 			zoomControl: false,
 			maxZoom: 18,
-		}).setView([42.317, -70.87], 11.5); //11.5
+		}).setView(getCoords(), getZoom()); //11.5
 
 		map.doubleClickZoom.disable();
 		
