@@ -55,7 +55,7 @@ p {
 
 .chart-container {
 	position: relative;
-	
+
 }
 
 .cal-data {
@@ -163,7 +163,7 @@ div.info {
 }
 
 .dot {
-  
+
 }
 
 .dot:hover {
@@ -239,6 +239,21 @@ rect.day-cell:hover {
 .calendar-heatmap {
   box-sizing: initial;
 }
+
+#footer {
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.footer-item {
+	font-style: italic;
+	color: #aaaaaa;
+}
+
+.footer-item a {
+	color: #489bd6;
+}
+
 
 @media only screen and (max-width: 1400px) {
 .row > p {

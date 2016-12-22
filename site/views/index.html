@@ -1,171 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="Nick Sypteras">
-  <title>Boston Data</title>
 
-  <link href="/css/clean-blog.min.css" rel="stylesheet">
-  <link href="/css/cosmic-custom.css" rel="stylesheet">
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-  <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,900" rel="stylesheet">
-   <link rel="stylesheet" href="/css/leaflet.css" />
-   <link href="/css/custom.css" rel="stylesheet">
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Nick Sypteras">
+    <title>Boston Data</title>
+
+    <link href="/css/clean-blog.min.css" rel="stylesheet">
+    <link href="/css/cosmic-custom.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,900" rel="stylesheet">
+    <link rel="stylesheet" href="/css/leaflet.css" />
+    <link href="/css/custom.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
+
 <body>
 
- <nav class="navbar navbar-default navbar-custom navbar-fixed-top is-fixed is-visible">
-    <div class="navbar-header page-scroll">
-      <a class="navbar-brand">nick sypteras</a>
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top is-fixed is-visible">
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand">nick sypteras</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a id="cxpBtn" href="#crime-poverty-scatter-plot">Crimes x Poverty</a></li>
+                <li><a id="shootingsBtn" href="#shootings">Shootings</a></li>
+                <li><a id="mapBtn" href="#geo-heatmap">Map</a></li>
+                <li><a id="calendarBtn" href="#calendar-heatmap">Calendar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="intro-header boston">
+        <div class="container">
+            <div class="row">
+                <div class="custom-post-heading">
+                    <h1 class="heading-txt">Poverty and Crime in Boston</h1>
+                    <h3 class="subheading">January 1 - August 10, 2015</h3>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container">
+
+        <div class="row">
+            <p>Many of the discussions in my Social Justice class this semester focused on the issues of poverty and violence. I learned a lot from these discussions; they also showed me how little I had previously understood about the prevalence of poverty
+                and violence in Boston.</p>
+
+            <p>I decided to leverage public data sets to educate myself and hopefully others in this area.</p>
+
+            <p>In the charts below, I’ve visualized several pieces of 2015 crime and poverty data from the US Census Bureau and the City of Boston. I learned a lot in the process of exploring this data, and hope this site can be informative to others as
+                well.
+            </p>
+            <br />
+            <br />
+        </div>
+
+        <div class="row">
+            <div class="chart-heading">Violent Crime and Poverty</div>
+            <div id="scatter-canvas1" class="chart-canvas"></div>
+            <p> The scatter plot above charts violent crimes per thousand people as a function of poverty rate in each Boston neighborhood. Hover over the dots to display the numbers for that neighborhood.</p>
+            <p>I was surprised to see that Roxbury has the highest rate of violent crime in Boston, considering its proximity to Northeastern. Perhaps more surprising however, was Mission Hill’s high poverty rate and its relatively low crime rate.</p>
+
+            <p>I tried to investigate this further by mining BPD FIO data. Unfortunately, the FIO dataset does not include exact location data, so it is impossible to see which FIO activity took place in Mission Hill. My guess is that the low crime rate
+                is a product of gentrification. Many students have moved to Mission Hill, pushing existing residents out. In light of this trend, it is possible that Northeastern pushes BPD to police more heavily there.</p>
+
+            <p>As we discussed in class, the chart suggests a positive relationship between poverty and crime, though this trend isn’t illustrated as strongly as shooting data.</p>
+            <br />
+        </div>
+
+        <div class="row">
+
+            <div class="chart-heading">Shootings - January to August 2015</div>
+            <div id="bar-canvas1" class="chart-canvas"></div>
+
+            <p>Here, the dichotomy between poor and wealthy Boston neighborhoods is better illustrated. We can see that the top 3 poorest neighborhoods from above (Dorchester, Mattapan, Roxbury) have higher rates of shootings than any other neighborhoods.
+                For Dorchester and Roxbury, the difference is astronomical (8- and 6-fold, respectively).</p>
+            <br />
+
+            <p>The following heatmap illustrates the distribution of poverty and crime across Boston. Use the selector on top to pick criteria for the heatmap, then hover over a neighborhood to reveal stats. You may have to adjust the zoom or drag the map
+                to fit your screen size.</p>
+            <br />
+        </div>
     </div>
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav navbar-right">
-         <li><a id="cxpBtn" href="#crime-poverty-scatter-plot">Crimes x Poverty</a></li>
-         <li><a id="shootingsBtn" href="#shootings">Shootings</a></li>
-         <li><a id="mapBtn" href="#geo-heatmap">Map</a></li>
-         <li><a id="calendarBtn" href="#calendar-heatmap">Calendar</a></li>
-      </ul>
-    </div>
- </nav>
 
- <header class="intro-header boston">
-  <div class="container">
-   <div class="row">
-    <div class="custom-post-heading">
-      <h1 class="heading-txt">Poverty and Crime in Boston</h1>
-      <h3 class="subheading">January 1 - August 10, 2015</h3>
-    </div>
-   </div>
- </div>
- </header>
-
-  
-  <div class="container">
-
-    <div class="row">
-      <p>Many of our Social Justice class discussions this semester focused on the issues of poverty and violence. I learned a lot from these discussions; they also showed me how little I had previously understood about the prevalence of poverty and violence in Boston.</p>
-     
-      <p>For my final project, I decided to leverage public data sets to educate myself and hopefully others in this area.</p>
-      
-      <p>In the charts below, I’ve visualized several pieces of 2015 crime and poverty data from the US Census Bureau and the City of Boston. I learned a lot in the process of exploring this data, and hope this site can be informative to others as well.</p>
-      <br />
-    </div>
-
-    <div class="row">
-      <div id="scatter-canvas1" class="chart-canvas"></div>
-      <p> The scatter plot above charts violent crimes per thousand people as a function of poverty rate in each Boston neighborhood. Hover over the dots to display the numbers for that neighborhood.</p>
-      <p>I was surprised to see that Roxbury has the highest rate of violent crime in Boston, considering its proximity to Northeastern. Perhaps more surprising however, was Mission Hill’s high poverty rate and its relatively low crime rate.</p>
-
-      <p>I tried to investigate this further by mining BPD FIO data. Unfortunately, the FIO dataset does not include exact location data, so it is impossible to see which FIO activity took place in Mission Hill. My guess is that the low crime rate is a product of gentrification. Many students have moved to Mission Hill, pushing existing residents out. In light of this trend, it is possible that Northeastern pushes BPD to police more heavily there.</p>
- 
-      <p>As we discussed in class, the chart suggests a positive relationship between poverty and crime, though this trend isn’t illustrated as strongly as shooting data.</p>
-      <br />
-    </div>
-
-    <div class="row">
-
-      <div class="chart-heading">Shootings - January to August 2015</div>
-      <div id="bar-canvas1" class="chart-canvas"></div>
-
-      <p>Here, the dichotomy between poor and wealthy Boston neighborhoods is better illustrated. We can see that the top 3 poorest neighborhoods from above (Dorchester, Mattapan, Roxbury) have higher rates of shootings than any other neighborhoods. For Dorchester and Roxbury, the difference is astronomical (8- and 6-fold, respectively).</p>
-      <br />
-
-      <p>The following heatmap illustrates the distribution of poverty and crime across Boston. Use the selector on top to pick criteria for the heatmap, then hover over a neighborhood to reveal stats. You may have to adjust the zoom or drag the map to fit your screen size.</p>
-      <br />
-    </div>
-  </div>
-
-  <div id="map-wrap">
-    <div class="custom-selector">
-      <select id="choropleth-select">
+    <div id="map-wrap">
+        <div class="custom-selector">
+            <select id="choropleth-select">
         <option value="Families in Poverty (%)">Families in Poverty (%)</option>
         <option>Unemployment (%)</option>
         <option>Violent Crimes Per Thousand People</option>
         <option>Shootings (January - August 2015)</option>
       </select>
-    </div>
-    <div class="chart-container">
-      <div id="leaflet-map"></div>
-    </div>
-  </div>
-
-  <div class="container bottom-container">
-  <div class="row">
-  <p>By playing with the map, it was interesting to see that the Boston neighborhoods where I and many other Northeastern students hang out the most (Back Bay, Downtown, Chinatown) all have the lowest poverty rates.</p>
-  <p>It thus becomes clear how even in a city as small as Boston, the distribution of poverty and gentrification create a divide in perceptions of the city. Residents of communities like Roxbury and Dorchester experience relatively high rates of poverty and its effects, while it is easy for students like myself to remain unaware.</p>
-
-  <p>Take for instance, the calendar heat maps below, which plot violent crimes committed from January to August 2015 in three different communities. Brighton and Roxbury have relatively equal populations, but lie on different ends of the economic spectrum. Fenway is a smaller community right next to Northeastern home to many students such as myself. Hover over the calendar to see crime numbers for a given day.</p>
-  <br />
-  </div>
-    <div class="row">
-        <h2 class="chart-heading">Fenway</h2>
-      <div class="calendar-chart">
-
-        <div id="cal1">
-
         </div>
-        <div class="cal-data" id="cd1"></div>
-      </div>
-    </div>
-
-    <div class="row">
-      <h2 class="chart-heading">Brighton</h2>
-      <div class=" chart-canvas calendar-chart">
-        <div id="cal2">
-
+        <div class="chart-container">
+            <div id="leaflet-map"></div>
         </div>
-        <div class="cal-data" id="cd2"></div>
-      </div>
     </div>
 
-    <div class="row">
-      <h2 class="chart-heading">Roxbury</h2>
-      <div class="calendar-chart">
-        <div id="cal3">
+    <div class="container bottom-container">
+        <div class="row">
+            <p>By playing with the map, it was interesting to see that the Boston neighborhoods where I and many other Northeastern students hang out the most (Back Bay, Downtown, Chinatown) all have the lowest poverty rates.</p>
+            <p>It thus becomes clear how even in a city as small as Boston, the distribution of poverty and gentrification create a divide in perceptions of the city. Residents of communities like Roxbury and Dorchester experience relatively high rates of
+                poverty and its effects, while it is easy for students like myself to remain unaware.</p>
 
+            <p>Take for instance, the calendar heat maps below, which plot violent crimes committed from January to August 2015 in three different communities. Brighton and Roxbury have relatively equal populations, but lie on different ends of the economic
+                spectrum. Fenway is a smaller community right next to Northeastern home to many students such as myself. Hover over the calendar to see crime numbers for a given day.</p>
+            <br />
         </div>
-        <div class="cal-data" id="cd3"></div>
-      </div>
+        <div class="row">
+            <h2 class="chart-heading">Fenway</h2>
+            <div class="calendar-chart">
+
+                <div id="cal1">
+
+                </div>
+                <div class="cal-data" id="cd1"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <h2 class="chart-heading">Brighton</h2>
+            <div class=" chart-canvas calendar-chart">
+                <div id="cal2">
+
+                </div>
+                <div class="cal-data" id="cd2"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <h2 class="chart-heading">Roxbury</h2>
+            <div class="calendar-chart">
+                <div id="cal3">
+
+                </div>
+                <div class="cal-data" id="cd3"></div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <p>Most days on the first two calendars are white, meaning no violent crimes occurred. On the other hand, only 9 days occurred in which no violent crimes were reported in Roxbury over the 8 month period. The heat map coloring is also relative
+                to each neighborhood. This means that the darkest square for Brighton indicates a day where 3 crimes were committed, whereas 13 crimes were committed in Roxbury’s darkest square.</p>
+            <p>A discussion we had in class is also of note here. Specifically, we discussed how poor communities with higher crime rates often have less trust of the police and report crimes less frequently. Meanwhile, it is not hard to image that residents
+                of Brighton and Fenway will likely report a violent crime if they see one. So the difference may be even more significant than the heat maps suggest. </p>
+            <br />
+        </div>
+
+
+        <div class="row">
+            <h2 class="chart-heading">Conclusion</h2>
+            <br />
+            <p>Exploring and visualizing this data was a meaningful experience and I would like to continue the process. The US Census bureau has a lot to offer and I look forward to seeing the City of Boston’s data portal continue to grow. I will likely
+                continue to play with this site in the future and hopefully further my understanding of these topics.</p>
+            <br />
+        </div>
+
+        <div class="row">
+            <div id="footer">
+                <span class="footer-item">
+                  [<a target="_blank" href="https://github.com/Syps/boston_data_site">code</a>]
+                </span>
+            </div>
+        </div>
     </div>
 
-
-    <div class="row">
-      <p>Most days on the first two calendars are white, meaning no violent crimes occurred. On the other hand, only 9 days occurred in which no violent crimes were reported in Roxbury over the 8 month period. The heat map coloring is also relative to each neighborhood. This means that the darkest square for Brighton indicates a day where 3 crimes were committed, whereas 13 crimes were committed in Roxbury’s darkest square.</p>
-      <p>A discussion we had in class is also of note here. Specifically, we discussed how poor communities with higher crime rates often have less trust of the police and report crimes less frequently. Meanwhile, it is not hard to image that residents of Brighton and Fenway will likely report a violent crime if they see one. So the difference may be even more significant than the heat maps suggest. </p>
-      <br />
+    <div class="container custom-footer">
     </div>
-
-
-    <div class="row">
-      <h2 class="chart-heading">Conclusion</h2>
-      <br />
-      <p>Exploring and visualizing this data was a meaningful experience and I would like to continue the process. The US Census bureau has a lot to offer and I look forward to seeing the City of Boston’s data portal continue to grow. I will likely continue to play with this site in the future and hopefully further my understanding of these topics.</p>
-      <br />
-    </div>
-  </div>
-
-  <div class="container custom-footer">
-  </div>
-  <script src="/js/jquery.min.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
-  <script src="/js/clean-blog.min.js"></script>
-  <script src="/js/moment.min.js"></script>
-  <script src="https://d3js.org/d3.v3.min.js"></script>
-  <script src="/js/calendar-heatmap.js"></script>
-  <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
-  <script src="/js/choropleth.js"></script>
-  <script src="/js/custom.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/clean-blog.min.js"></script>
+    <script src="/js/moment.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="/js/calendar-heatmap.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+    <script src="/js/choropleth.js"></script>
+    <script src="/js/custom.js"></script>
 </body>
+
 </html>
