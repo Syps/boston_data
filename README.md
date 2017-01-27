@@ -1,3 +1,7 @@
-# boston_data
-This repository contains data files, a jupyter notebook for calculations, and front end code for [http://www.haveyouseenmy.website/boston-data](http://www.haveyouseenmy.website/boston-data).
+# boston_data [_`Old`_]
+This repository contains data files, jupyter notebook, and original front end code for https://nicksypteras/boston-data.
+
+A rebuilt, React version of this project, the one that's used on the site linked to above, can be found [here](https://github.com/Syps/boston_data_react).
+
+I used some of [Mike Bostok's](https://bost.ocks.org/mike/) examples to make the non-map charts. 
 
