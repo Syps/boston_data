@@ -1,5 +1,5 @@
 # boston_data [_`Old`_]
-This repository contains data files, jupyter notebook, and original front end code for [https://nicksypteras.com/boston-data](https://nicksypteras.com/boston-data).
+This repository contains data files, jupyter notebook, and original front end code for [https://www.nicksypteras.com/data/boston](https://www.nicksypteras.com/data/boston).
 
 A rebuilt, React version of this project, the one that's used on the site linked to above, can be found [here](https://github.com/Syps/boston_data_react).
 
